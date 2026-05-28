@@ -1,0 +1,11 @@
+.card-header {
+  display: flex;
+  gap: 10px;
+}
+.card-header img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: none;
+}
