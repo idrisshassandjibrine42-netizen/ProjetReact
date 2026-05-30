@@ -6,7 +6,7 @@ import SectionCards from "./SectionCards";
 
 function ServicesSection() {
   return (
-    <section id="highlights">
+    <section id="services">
       <SectionTitle title="Nos services" />
 
       <SectionCards

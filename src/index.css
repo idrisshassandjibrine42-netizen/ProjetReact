@@ -25,6 +25,41 @@ p {
   font-size: 18px;
   margin-bottom: 15px;
 }
+
+.card {
+  background-color: #fafafa;
+  border: 1px solid #dddddd;
+  padding: 15px;
+  position: relative;
+  flex: 1;
+}
+.card h3 {
+  text-align: center;
+}
+.card p {
+  display: inline-block;
+}
+#availability {
+  margin-left: 10px;
+  font-weight: bold;
+}
+.available {
+  color: green;
+}
+.unavailable {
+  color: red;
+}
+.card img {
+  width: 400px;
+  height: 300px;
+}
+#products-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  border-radius: 25px;
+}
+
 section {
   background-color: white;
   max-width: 900px;
@@ -45,16 +80,6 @@ img {
   justify-content: center;
   margin-top: 15px;
 }
-.card {
-  background-color: #fafafa;
-  border: 1px solid #dddddd;
-  padding: 15px;
-  position: relative;
-  flex: 1;
-}
-.card p {
-  display: inline-block;
-}
 
 @media (max-width: 768px) {
   .hero-actions {
@@ -67,5 +92,8 @@ img {
   section {
     padding: 15px;
     margin: 15px;
+  }
+  .card img {
+    max-width: 50%;
   }
 }
