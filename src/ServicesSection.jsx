@@ -1,7 +1,7 @@
-import SectionTitle from "./SectionTitle";
-import premium from "./assets/premium-quality.png";
-import services from "./assets/costomer.png";
-import livraison from "./assets/Livraison.gif";
+import SectionTitle from "./components/common/SectionTitle";
+import premium from "./assets/images/premium-quality.png";
+import services from "./assets/images/costomer.png";
+import livraison from "./assets/images/Livraison.gif";
 import SectionCards from "./SectionCards";
 
 function ServicesSection() {

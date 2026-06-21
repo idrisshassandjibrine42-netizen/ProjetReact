@@ -1,0 +1,16 @@
+form {
+  margin-top: 15px;
+}
+input,
+textarea,
+button {
+  margin-top: 5px;
+}
+
+.form-zone {
+  margin-bottom: 15px;
+}
+
+.form-zone label {
+  display: block;
+}
