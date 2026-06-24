@@ -7,7 +7,10 @@ import SectionCards from "./SectionCards";
 function ServicesSection() {
   return (
     <section id="services">
-      <SectionTitle title="Nos services" />
+      <SectionTitle
+        title="Nos services"
+        subtitle="Découvrez notre sélection de services exceptionnels."
+      />
 
       <SectionCards
         image={services}

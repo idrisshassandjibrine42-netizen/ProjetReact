@@ -1,3 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #2e6237;
+  --color-champagne: #f9edc5;
+  --color-bronze: #f59582;
+  --color-gold: #dfc196;
+  --color-mist: #eef1ec;
+  --color-cream: #f3f5f2;
+  --color-graphite: #586053;
+  --color-ine: #eadcb7;
+  --color-accentDark: #21492a;
+  --color-accentLight: #f9dc7c;
+}
+
+@layer components {
+  .lux-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .lux-card {
+    @apply border bg-white p-5 md:p-6 shadow-lg;
+  }
+
+  .lux-button-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-ink px-5 py-3 text-xs font-semibold uppercase 
+tracking-[0.16em] text-champagne transition hover:bg-stone-800;
+  }
+}
 body {
   padding: 0;
   margin: 0;
@@ -15,15 +43,8 @@ h2 {
   margin-bottom: 10px;
 }
 
-h3 {
-  color: #111111;
-  font-size: 22px;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
 p {
   font-size: 18px;
-  margin-bottom: 15px;
 }
 
 .card {
@@ -61,19 +82,13 @@ p {
 }
 
 section {
-  background-color: white;
+  background-color: rgb(255, 244, 194);
   max-width: 900px;
   padding: 20px;
   border: 1px solid #e0e0e0;
   margin: 20px auto;
 }
-img {
-  display: block;
-  margin: 15px auto;
-  border: #111111 solid 2px;
-  max-width: 100%;
-  height: auto;
-}
+
 .hero-actions {
   display: flex;
   gap: 15px;

@@ -1,0 +1,15 @@
+{
+  "section": {
+    "eyebrow": "Collection"
+  },
+  "allLabel": "Toutes",
+  "categoryLabels": {
+    "Collector Edition": "Edition collection",
+    "Dress Watch": "Montre habillee",
+    "Dive Watch": "Montre de plongee",
+    "Executive": "Executive",
+    "Sport Chronograph": "Chronographe sport"
+  },
+  "loading": "Chargement de la collection...",
+  "error": "La collection est indisponible pour le moment. Veuillez reessayer dans quelques instants."
+}

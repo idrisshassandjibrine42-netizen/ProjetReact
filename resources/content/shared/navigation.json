@@ -1,0 +1,18 @@
+{
+  "brand": "MAISON PARFUMS",
+  "navbar": [
+    { "label": "Produits", "to": "/products" },
+    { "label": "Contact", "to": "/contact" }
+  ],
+  "footer": {
+    "headline": "Des parfums choisis pour leur signature, leur elegance et leur presence.",
+    "navigationTitle": "Navigation",
+    "links": ["Accueil", "Produits", "Contact", "Mentions legales"],
+    "conciergeTitle": "Conciergerie",
+    "conciergeItems": [
+      "concierge@maisonparfums.com",
+      "+216 71 255 440",
+      "Tunis, Tunisie"
+    ]
+  }
+}

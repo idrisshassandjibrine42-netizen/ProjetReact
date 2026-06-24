@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SectionTitle from "./components/common/SectionTitle";
 import ProductsCards from "./components/products/productsCards";
-import "./featuresSection.css";
 
 const products = [
   {
@@ -46,7 +45,10 @@ function FeaturesSection() {
   }
   return (
     <section id="features">
-      <SectionTitle title="Nos modèles de luxe" />
+      <SectionTitle
+        title="Nos modèles de luxe"
+        subtitle="Découvrez notre sélection de parfums de luxe."
+      />
       <section id="cart">
         <h3>Contenu du panier</h3>
         <button onClick={() => removeAllFromCart()}>Vider le panier</button>
@@ -61,7 +63,7 @@ function FeaturesSection() {
         })}
       </section>
 
-      <div id="features-products">
+      <div className="flex flex-wrap gap-4 justify-center">
         {products.map((product) => {
           return (
             <ProductsCards

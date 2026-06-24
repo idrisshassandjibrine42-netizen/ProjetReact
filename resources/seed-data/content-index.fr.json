@@ -1,0 +1,23 @@
+{
+  "site": {
+    "language": "fr",
+    "currency": "TND",
+    "brand": "Maison Parfums"
+  },
+  "pages": [
+    "home.json",
+    "products.json",
+    "product-details.json",
+    "contact.json",
+    "legal.json",
+    "basket.json",
+    "checkout.json",
+    "not-found.json"
+  ],
+  "shared": [
+    "navigation.json"
+  ],
+  "seedFiles": [
+    "products.fr.json"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "breadcrumbs": ["Accueil", "Produits"],
+  "labels": {
+    "loading": "Chargement des details du produit...",
+    "notFound": "Ce parfum est introuvable.",
+    "category": "Categorie",
+    "movement": "Signature",
+    "rating": "Note",
+    "price": "Prix",
+    "addToBasket": "Ajouter au panier",
+    "insuredPurchase": "Achat assure",
+    "premiumDelivery": "Livraison premium",
+    "piecesAvailable": "Pieces disponibles",
+    "collectorNotesEyebrow": "Notes de la maison",
+    "collectorNotesTitle": "Un regard detaille sur cette creation olfactive.",
+    "caseSize": "Format",
+    "strap": "Concentration",
+    "relatedEyebrow": "Poursuivre la visite",
+    "relatedTitle": "D'autres creations issues de la meme selection premium.",
+    "relatedText": "Parcourez d'autres references offrant un meme equilibre entre signature, tenue et elegance."
+  },
+  "galleryLabels": {
+    "hero": "Flacon",
+    "detail": "Detail",
+    "lifestyle": "Ambiance"
+  },
+  "galleryCaptions": {
+    "hero": "Vue principale du flacon et de sa presence visuelle.",
+    "detail": "Focus sur les matieres, le verre et les finitions du produit.",
+    "lifestyle": "Mise en scene pensee pour montrer l'univers de la creation."
+  }
+}

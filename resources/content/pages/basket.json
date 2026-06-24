@@ -1,0 +1,20 @@
+{
+  "section": {
+    "eyebrow": "Panier",
+    "title": "Revoyez vos parfums selectionnes avant le paiement securise.",
+    "text": "Ajustez les quantites, retirez des produits et confirmez votre recapitulatif avant de continuer."
+  },
+  "empty": {
+    "text": "Votre panier est vide. Commencez par explorer la collection.",
+    "cta": "Voir les produits"
+  },
+  "labels": {
+    "quantity": "Qte",
+    "remove": "Retirer",
+    "summary": "Recapitulatif",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison assuree",
+    "total": "Total",
+    "checkout": "Passer a la commande"
+  }
+}

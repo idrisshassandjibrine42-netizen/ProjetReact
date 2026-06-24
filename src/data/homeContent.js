@@ -1,0 +1,29 @@
+const homeContent = {
+  hero: {
+    title:
+      "Des creations olfactives pensees pour ceux qui collectionnent les sillages comme des signatures.",
+    text: "Flacons editoriaux, compositions rares et accompagnement conciergerie pour une experience parfum plus premium, plus simple et plus desiree.",
+    primaryButton: "Explorer les collections",
+    secondaryButton: "Contacter le concierge",
+  },
+  stats: [
+    { value: "18+", label: "maisons de parfum representees" },
+    { value: "48h", label: "delai moyen de reponse du concierge" },
+    { value: "100%", label: "livraison assuree sur chaque commande" },
+  ],
+  Highlight: [
+    {
+      title: "Collection signature",
+      text: "Chaque creation est choisie pour sa qualite de composition, sa tenue et sa personnalite olfactive.",
+    },
+    {
+      title: "Conseil prive",
+      text: "Du choix du sillage au cadeau ideal, notre equipe vous accompagne avec des recommandations sur mesure.",
+    },
+    {
+      title: "Livraison premium assuree",
+      text: "Chaque commande est preparee avec soin et expediee dans une presentation elegante et protegee.",
+    },
+  ],
+};
+export default homeContent;

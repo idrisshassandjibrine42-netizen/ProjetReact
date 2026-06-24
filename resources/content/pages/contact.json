@@ -1,0 +1,29 @@
+{
+  "section": {
+    "eyebrow": "Contact",
+    "title": "Contactez notre equipe de conciergerie pour le sourcing, les cadeaux et les conseils olfactifs.",
+    "text": "Que vous choisissiez une signature personnelle ou un cadeau premium, nous proposons une experience parfum sur mesure."
+  },
+  "contactDetails": [
+    { "label": "Showroom", "value": "7 Rue du Lac, Les Berges du Lac, Tunis, Tunisie" },
+    { "label": "Telephone", "value": "+216 71 255 440" },
+    { "label": "Email", "value": "concierge@maisonparfums.com" },
+    { "label": "Horaires", "value": "Lun - Sam, 10:00 a 19:00" }
+  ],
+  "form": {
+    "eyebrow": "Demande privee",
+    "title": "Planifiez un echange avec notre concierge parfum",
+    "fields": {
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "request": "Parfum souhaite ou demande"
+    },
+    "placeholders": {
+      "name": "Entrez votre nom",
+      "email": "Entrez votre e-mail",
+      "request": "Indiquez le parfum, la famille olfactive ou le type d'accompagnement souhaite"
+    },
+    "submit": "Envoyer la demande",
+    "success": "Votre demande a bien ete prise en compte. Un conseiller vous recontactera tres bientot."
+  }
+}

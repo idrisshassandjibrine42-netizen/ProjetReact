@@ -1,0 +1,209 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maison Parfums UI Guide</title>
+    <style>
+      :root {
+        --ink: #2e6237;
+        --green-deep: #21492a;
+        --brandy: #dfc196;
+        --cream: #f9edc5;
+        --yellow: #f9dc7c;
+        --coral: #f59582;
+        --paper: #fffaf0;
+        --line: #eadcb7;
+        --graphite: #5f644d;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(245, 149, 130, 0.2), transparent 28%),
+          radial-gradient(circle at top right, rgba(223, 193, 150, 0.24), transparent 26%),
+          linear-gradient(180deg, #fffaf0, #fff6e7);
+      }
+      .page { max-width: 1180px; margin: 0 auto; padding: 42px 24px 80px; }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(223, 193, 150, 0.22);
+        background:
+          radial-gradient(circle at top right, rgba(249, 220, 124, 0.18), transparent 28%),
+          linear-gradient(135deg, #21492a 0%, #2e6237 55%, #4d8456 100%);
+        color: white;
+        padding: 54px 56px;
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -50px;
+        width: 240px;
+        height: 240px;
+        border-radius: 999px;
+        background: rgba(249, 237, 197, 0.08);
+      }
+      .eyebrow {
+        margin: 0;
+        font-size: 12px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--brandy);
+      }
+      h1, h2, h3 {
+        margin: 0;
+        font-family: "Times New Roman", Georgia, serif;
+      }
+      h1 {
+        max-width: 760px;
+        margin-top: 12px;
+        font-size: 52px;
+        line-height: 1.02;
+      }
+      h2 {
+        font-size: 30px;
+        margin-bottom: 14px;
+      }
+      p {
+        line-height: 1.72;
+        color: var(--graphite);
+      }
+      .hero-copy {
+        max-width: 640px;
+        margin-top: 14px;
+        color: rgba(255,255,255,0.82);
+      }
+      .section { margin-top: 54px; }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(249,237,197,0.84));
+        padding: 24px;
+      }
+      .palette {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .swatch {
+        border: 1px solid var(--line);
+        background: white;
+      }
+      .chip {
+        height: 96px;
+      }
+      .swatch-meta {
+        padding: 12px;
+        font-size: 13px;
+      }
+      .products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 22px;
+      }
+      .product {
+        border: 1px solid rgba(223, 193, 150, 0.24);
+        background:
+          radial-gradient(circle at top, rgba(249, 220, 124, 0.22), transparent 45%),
+          linear-gradient(180deg, #fff, #fff8eb);
+        padding: 26px 20px;
+      }
+      .product img {
+        width: 100%;
+        height: 290px;
+        object-fit: contain;
+      }
+      .product-name {
+        margin-top: 12px;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 28px;
+        text-align: center;
+        text-transform: uppercase;
+        color: var(--green-deep);
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .pill {
+        padding: 10px 14px;
+        border: 1px solid rgba(46, 98, 55, 0.14);
+        background: rgba(255,255,255,0.72);
+        font-size: 14px;
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Maison Parfums UI Guide</p>
+        <h1>Une identite plus vegetale, lumineuse et sensorielle que la version horlogerie.</h1>
+        <p class="hero-copy">
+          Le site doit evoquer le sillage, la matiere et le raffinement. On cherche une boutique de haute parfumerie:
+          plus fraiche, plus precieuse et plus editoriale, avec une base verte profonde et des accents cream, brandy et corail.
+        </p>
+      </section>
+
+      <section class="section two-col">
+        <article class="card">
+          <h2>Direction visuelle</h2>
+          <p>La base doit rester premium, mais quitter l'univers noir-or strict de l'horlogerie. Ici, l'accent passe par un vert profond, des tons cream, un brandy chaud, un jaune doux et une pointe corail plus parfum.</p>
+          <div class="pill-row">
+            <span class="pill">Hero vegetal</span>
+            <span class="pill">Palette perfume luxe</span>
+            <span class="pill">Display editorial</span>
+            <span class="pill">UI plus lumineuse</span>
+          </div>
+        </article>
+        <article class="card">
+          <h2>Fonts recommandees</h2>
+          <p><strong>Display:</strong> Cormorant Garamond</p>
+          <p><strong>Body:</strong> Plus Jakarta Sans</p>
+          <p>Les titres doivent paraitre plus fluides et couture. Le texte d'interface doit rester moderne et propre.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Palette</h2>
+        <div class="palette">
+          <div class="swatch"><div class="chip" style="background:#2E6237"></div><div class="swatch-meta">Trendy Dark Green<br>#2E6237</div></div>
+          <div class="swatch"><div class="chip" style="background:#DFC196"></div><div class="swatch-meta">Brandy<br>#DFC196</div></div>
+          <div class="swatch"><div class="chip" style="background:#F9EDC5"></div><div class="swatch-meta">Rich Cream<br>#F9EDC5</div></div>
+          <div class="swatch"><div class="chip" style="background:#F9DC7C"></div><div class="swatch-meta">Mellow Yellow<br>#F9DC7C</div></div>
+          <div class="swatch"><div class="chip" style="background:#F59582"></div><div class="swatch-meta">Aesthetic Coral<br>#F59582</div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Produits placeholder</h2>
+        <div class="products">
+          <article class="product">
+            <img src="./assets/products/ambre-imperial-1.png" alt="Ambre Imperial" />
+            <div class="product-name">Ambre Imperial</div>
+          </article>
+          <article class="product">
+            <img src="./assets/products/rose-nocturne-1.png" alt="Rose Nocturne" />
+            <div class="product-name">Rose Nocturne</div>
+          </article>
+          <article class="product">
+            <img src="./assets/products/neroli-solaire-1.png" alt="Neroli Solaire" />
+            <div class="product-name">Neroli Solaire</div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+import Button from "./components/UI/Button";
 import SectionTitle from "./components/common/SectionTitle";
 import { useState } from "react";
 import "./contactForm.css";
@@ -31,8 +32,11 @@ function ContactForm() {
     }
   }
   return (
-    <section id="contact">
-      <SectionTitle title="Contactez-nous" />
+    <section id="contact-form">
+      <SectionTitle
+        title="Contactez-nous"
+        subtitle="N'hésitez pas à nous contacter pour toute question ou demande d'information."
+      />
       <form onSubmit={handleSubmit}>
         <div className="form-zone">
           <label>Nom:</label>
@@ -72,7 +76,7 @@ function ContactForm() {
           ></textarea>
           {errors.message && <p className="error-message">{errors.message}</p>}
         </div>
-        <button type="submit">Envoyer</button>
+        <Button text="Envoyer" type="submit" />
         {formMessage && <p className="form-message">{formMessage}</p>}
       </form>
     </section>

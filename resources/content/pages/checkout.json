@@ -1,0 +1,32 @@
+{
+  "section": {
+    "eyebrow": "Commande",
+    "title": "Finalisez votre commande avec un parcours d'achat simple et securise.",
+    "text": "Cette etape recueille uniquement les informations essentielles pour permettre a notre equipe de vous recontacter."
+  },
+  "form": {
+    "fields": [
+      { "id": "name", "label": "Nom complet", "placeholder": "Entrez votre nom complet", "type": "text" },
+      { "id": "email", "label": "Adresse e-mail", "placeholder": "Entrez votre e-mail", "type": "email" },
+      { "id": "address", "label": "Adresse", "placeholder": "Rue et numero", "type": "text" },
+      { "id": "phone", "label": "Telephone", "placeholder": "Votre numero de telephone", "type": "tel" },
+      { "id": "city", "label": "Ville", "placeholder": "Choisir une ville", "type": "select" },
+      { "id": "zip", "label": "Code postal", "placeholder": "Code postal", "type": "text" }
+    ],
+    "required": ["name", "email", "address", "phone", "city", "zip"],
+    "cityOptions": ["Tunis", "Sfax", "Sousse", "Kairouan", "Bizerte", "Gabes", "Ariana", "Gafsa", "Monastir", "Ben Arous", "Nabeul", "Hammamet", "Mahdia", "Djerba"],
+    "submit": "Confirmer la commande"
+  },
+  "success": {
+    "eyebrow": "Commande envoyee",
+    "title": "Merci pour votre confiance.",
+    "text": "Votre commande a bien ete enregistree. Nous vous contacterons tres bientot pour la confirmation finale et les details de livraison."
+  },
+  "summary": {
+    "title": "Recapitulatif de commande",
+    "empty": "Votre panier est vide. Ajoutez une montre avant de valider votre commande.",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "total": "Total"
+  }
+}

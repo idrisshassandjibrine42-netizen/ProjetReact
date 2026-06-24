@@ -14,3 +14,6 @@ button {
 .form-zone label {
   display: block;
 }
+#contact-form {
+  background-color: white;
+}

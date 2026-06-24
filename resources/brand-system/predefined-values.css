@@ -1,0 +1,23 @@
+﻿:root {
+  --color-ink: #2e6237;
+  --color-champagne: #f9edc5;
+  --color-bronze: #f59582;
+  --color-gold: #dfc196;
+  --color-mist: #eef1ec;
+  --color-cream: #f3f5f2;
+  --color-graphite: #586053;
+  --color-line: #eadcb7;
+  --color-accent-dark: #21492a;
+  --color-accent-light: #f9dc7c;
+  --radius-panel: 1.5rem;
+  --shadow-luxe: 0 24px 70px rgba(46, 98, 55, 0.12);
+  --transition-base: 220ms ease;
+}
+
+.lux-card {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-luxe);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(238, 241, 236, 0.92));
+  border: 1px solid rgba(223, 193, 150, 0.32);
+}
+
