@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   return (
     <article className="lux-card group overflow-hidden">
       <div className="relative aspect-[4/4.25] overflow-hidden border bg-white">
@@ -50,6 +50,13 @@ graphite"
           <Link to={`/products/${product.id}`} className="lux-button-primary">
             Details
           </Link>
+          <button
+            type="button"
+            onClick={() => addToCart(product)}
+            className="lux-button flex-1"
+          >
+            Ajouter
+          </button>
         </div>
       </div>
     </article>

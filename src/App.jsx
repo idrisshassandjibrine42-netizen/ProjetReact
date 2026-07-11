@@ -7,7 +7,8 @@ import Contact from "./pages/ContactPage";
 import Cart from "./pages/CartPage";
 import About from "./pages/AboutPage";
 import ProductDetailsPage from "./pages/productDetailsPage";
-
+import CheckoutPage from "./pages/CheckoutPage";
+import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   return (
     <Routes>
@@ -18,6 +19,8 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="about" element={<About />} />
         <Route path="products/:id" element={<ProductDetailsPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

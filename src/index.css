@@ -1,114 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #2e6237;
-  --color-champagne: #f9edc5;
-  --color-bronze: #f59582;
-  --color-gold: #dfc196;
-  --color-mist: #eef1ec;
-  --color-cream: #f3f5f2;
-  --color-graphite: #586053;
-  --color-ine: #eadcb7;
-  --color-accentDark: #21492a;
-  --color-accentLight: #f9dc7c;
+  --color-ink: #171717;
+  --color-champagne: #f2e7d3;
+  --color-bronze: #8a5b3f;
+  --color-gold: #c9a961;
+  --color-mist: #ece8e1;
+  --color-cream: #f8f4ed;
+  --color-graphite: #57534e;
+  --color-line: #ddd4c7;
+  --radius-panel: 0.35rem;
+  --shadow-luxe: 0 18px 45px rgba(31, 24, 17, 0.08);
+  --animate-base: 220ms ease;
+  --font-body: "Manrope", sans-serif;
+  --font-display: "Playfair Display", serif;
 }
 
-@layer components {
-  .lux-container {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
-  }
-  .lux-card {
-    @apply border bg-white p-5 md:p-6 shadow-lg;
-  }
+:root {
+  --site-header-height: 8.75rem;
+}
 
-  .lux-button-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-ink px-5 py-3 text-xs font-semibold uppercase 
-tracking-[0.16em] text-champagne transition hover:bg-stone-800;
+@variant md (min-width: 768px);
+@media (min-width: 768px) {
+  :root {
+    --site-header-height: 5rem;
   }
 }
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 17px;
+  }
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f5f5f5;
-  color: #222222;
-}
-button {
-  cursor: pointer;
-}
-h2 {
-  color: #111111;
-  font-size: 28px;
-  margin-top: 0;
-  margin-bottom: 10px;
+  @apply bg-cream font-body antialiased;
+  background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(201, 169, 97, 0.12),
+      transparent 22%
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 244, 237, 1));
 }
 
-p {
-  font-size: 18px;
+a {
+  @apply transition;
 }
 
-.card {
-  background-color: #fafafa;
-  border: 1px solid #dddddd;
-  padding: 15px;
-  position: relative;
-  flex: 1;
-}
-.card h3 {
-  text-align: center;
-}
-.card p {
-  display: inline-block;
-}
-#availability {
-  margin-left: 10px;
-  font-weight: bold;
-}
-.available {
-  color: green;
-}
-.unavailable {
-  color: red;
-}
-.card img {
-  width: 400px;
-  height: 300px;
-}
-#products-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  border-radius: 25px;
+.lux-container {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-5 lg:px-6;
 }
 
-section {
-  background-color: rgb(255, 244, 194);
-  max-width: 900px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  margin: 20px auto;
+.lux-panel {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-luxe);
+  @apply p-6 md:p-8;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 15px;
+.lux-card {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-luxe);
+  @apply border bg-white p-5 md:p-6;
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
-@media (max-width: 768px) {
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  h2 {
-    font-size: 22px;
-  }
-  section {
-    padding: 15px;
-    margin: 15px;
-  }
-  .card img {
-    max-width: 50%;
-  }
+.lux-button-primary {
+  @apply inline-flex items-center justify-center gap-2.5 bg-ink px-5 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-champagne transition hover:bg-stone-800;
+}
+
+.lux-button-secondary {
+  @apply inline-flex items-center justify-center gap-2.5 border px-5 py-3 text-xs font-semibold uppercase tracking-[0.16em] transition hover:border-white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon-pill {
+  @apply flex h-10 w-10 items-center justify-center text-base text-ink transition hover:text-bronze;
+}
+
+.lux-input {
+  @apply mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-ink;
+}
+
+.lux-input:focus {
+  box-shadow: 0 0 0 2px rgba(201, 169, 97, 0.15);
+}
+
+.lux-label {
+  @apply text-xs font-semibold uppercase tracking-[0.24em] text-graphite opacity-70;
 }
