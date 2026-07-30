@@ -1,13 +1,11 @@
 import HeroSection from "../components/HeroSection";
-import StatsSectionHome from "../components/StatsSectionHome";
-import Gallery from "../components/Galery";
+import RecentCollectionSection from "../components/RecentCollectionSection";
 
 function Home() {
   return (
     <>
       <HeroSection />
-      <StatsSectionHome />
-      <Gallery />
+      <RecentCollectionSection />
     </>
   );
 }

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../../hooks/useCart";
 
 function Navbar() {
+  const { totalItems } = useCart();
   return (
     <header>
       <div id="header-content">
@@ -10,7 +12,7 @@ function Navbar() {
           <Link to="/">Accueil</Link>
           <Link to="/products">Produits</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/cart">Panier</Link>
+          <Link to="/cart">Panier({totalItems})</Link>
           <Link to="/about">À propos</Link>
           <Link to="/checkout">Checkout</Link>
         </nav>

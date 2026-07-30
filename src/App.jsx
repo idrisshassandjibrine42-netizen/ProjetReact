@@ -9,6 +9,9 @@ import About from "./pages/AboutPage";
 import ProductDetailsPage from "./pages/productDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+
 function App() {
   return (
     <Routes>
@@ -21,6 +24,8 @@ function App() {
         <Route path="products/:id" element={<ProductDetailsPage />} />
         <Route path="checkout" element={<CheckoutPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="admin" element={<AdminLogin />} />
+        <Route path="admin/dashboard" element={<AdminDashboard />} />
       </Route>
     </Routes>
   );

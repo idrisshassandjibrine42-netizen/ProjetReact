@@ -1,10 +1,3 @@
-import ambreImperial from "../assets/products/ambre-imperial-1.png";
-import roseNocturne from "../assets/products/rose-nocturne-1.png";
-import cedreAbsolu from "../assets/products/cedre-absolu-1.png";
-import fleurVelours from "../assets/products/fleur-velours-1.png";
-import neroliSolaire from "../assets/products/neroli-solaire-1.png";
-import oudVelours from "../assets/products/oud-velours-1.png";
-
 const productsData = [
   {
     id: 1,
@@ -20,7 +13,7 @@ const productsData = [
     price: 620,
     rating: 4.9,
     countInStock: 5,
-    imageKey: ambreImperial,
+    imageKey: "ambre-imperial",
     accent: "Amber Gold",
     caseSize: "100ml",
     strap: "Extrait de parfum",
@@ -53,7 +46,7 @@ const productsData = [
     price: 540,
     rating: 4.8,
     countInStock: 7,
-    imageKey: roseNocturne,
+    imageKey: "rose-nocturne",
     accent: "Velvet Rose",
     caseSize: "100ml",
     strap: "Eau de parfum",
@@ -86,7 +79,7 @@ const productsData = [
     price: 510,
     rating: 4.7,
     countInStock: 6,
-    imageKey: cedreAbsolu,
+    imageKey: "cedre-absolu",
     accent: "Cedar Brown",
     caseSize: "100ml",
     strap: "Eau de parfum",
@@ -119,7 +112,7 @@ const productsData = [
     price: 480,
     rating: 4.6,
     countInStock: 9,
-    imageKey: fleurVelours,
+    imageKey: "fleur-velours",
     accent: "Soft Petal",
     caseSize: "100ml",
     strap: "Eau de parfum",
@@ -152,7 +145,7 @@ const productsData = [
     price: 500,
     rating: 4.9,
     countInStock: 4,
-    imageKey: neroliSolaire,
+    imageKey: "neroli-solaire",
     accent: "Solar Citrus",
     caseSize: "100ml",
     strap: "Eau de parfum",
@@ -185,7 +178,7 @@ const productsData = [
     price: 760,
     rating: 4.8,
     countInStock: 3,
-    imageKey: oudVelours,
+    imageKey: "oud-velours",
     accent: "Deep Oud",
     caseSize: "100ml",
     strap: "Extrait de parfum",
