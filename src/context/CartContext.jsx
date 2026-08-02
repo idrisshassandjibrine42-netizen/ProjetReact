@@ -1,54 +1,86 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 
-export const CartContext = createContext();
+const readStoredCart = () => {
+  if (typeof window === "undefined") return [];
 
-export function CartProvider({ Children }) {
-  const [cartItems, setCartItems] = useState(() => {
-    const localItems = localStorage.getItem("cartItems");
-    return localItems ? JSON.parse(localItems) : [];
-  });
+  try {
+    const storedItems = localStorage.getItem("cartItems");
+    return storedItems ? JSON.parse(storedItems) : [];
+  } catch {
+    return [];
+  }
+};
 
-  //
+export const CartContext = createContext(null);
+
+export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState(readStoredCart);
+
   useEffect(() => {
-    cartItems && localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
   }, [cartItems]);
 
   const addToCart = (product) => {
-    const produitTrouver = cartItems.find((item) => product._id === item._id);
+    const productId = product?._id ?? product?.id;
 
-    if (produitTrouver) {
-      setCartItems((prevItems) =>
-        prevItems.map((item) => {
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item;
-        }),
+    if (!productId) return;
+
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => (item?._id ?? item?.id) === productId,
       );
-    } else {
-      const newProduct = { ...product, quantity: 1 };
-      setCartItems((prevItems) => [...prevItems, newProduct]);
-    }
+
+      if (existingItem) {
+        return prevItems.map((item) => {
+          const itemId = item?._id ?? item?.id;
+          return itemId === productId
+            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            : item;
+        });
+      }
+
+      return [
+        ...prevItems,
+        { ...product, _id: productId, id: productId, quantity: 1 },
+      ];
+    });
   };
 
-  const removeFromCart = (productId) => {
-    const newCartItems = cartItems.filter((item) => item._id !== productId);
-    setCartItems(newCartItems);
+  const removeFromCart = (productId, removeEntireItem = false) => {
+    setCartItems((prevItems) =>
+      prevItems.flatMap((item) => {
+        const itemId = item?._id ?? item?.id;
+
+        if (itemId !== productId) return [item];
+        if (removeEntireItem || (item.quantity || 1) <= 1) return [];
+
+        return [{ ...item, quantity: (item.quantity || 1) - 1 }];
+      }),
+    );
   };
 
   const clearCart = () => {
     setCartItems([]);
   };
 
-  const totalPrice = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0,
-    );
-  };
+  const totalPrice = useMemo(
+    () =>
+      cartItems.reduce(
+        (total, item) =>
+          total + Number(item.price || 0) * Number(item.quantity || 1),
+        0,
+      ),
+    [cartItems],
+  );
 
-  const totalQuantity = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
+  const totalQuantity = useMemo(
+    () =>
+      cartItems.reduce((total, item) => total + Number(item.quantity || 1), 0),
+    [cartItems],
+  );
+
   return (
     <CartContext.Provider
       value={{
@@ -58,10 +90,12 @@ export function CartProvider({ Children }) {
         clearCart,
         totalPrice,
         totalQuantity,
+        totalItems: totalQuantity,
       }}
     >
-      {Children}
+      {children}
     </CartContext.Provider>
   );
 }
+
 CartProvider.Context = CartContext;

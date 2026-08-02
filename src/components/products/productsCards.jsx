@@ -1,11 +1,11 @@
 import { FiShoppingBag, FiStar } from "react-icons/fi";
 import { useCart } from "../../hooks/useCart";
 import { Link } from "react-router-dom";
+import { getProductImageUrl } from "../../utils/productImage";
 
 const ProductCard = ({ product }) => {
-  //
   const { addToCart } = useCart();
-  const IMAGES_URL = "http://localhost:5001/images/";
+  const imageUrl = getProductImageUrl(product, 1);
   return (
     <article className="lux-cart group overflow-hidden">
       <div
@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
         <Link to={`/products/${product.id}`} className="block h-full w-full">
           <div className="absolute inset-0 bg-glow opacity-25 " />
           <img
-            src={`${IMAGES_URL}/product/${product.imageKey}-1.png`}
+            src={imageUrl}
             alt={product.name}
             className="h-auto w-auto object-cover object-center transition duration-500 group-hover:scale-105"
           />
@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
             <p className="text-[11px] uppercase tracking-[0.26em] text-gold">
               {product.brand}
             </p>
-            <Link to={`/products/${product.slug}`} className="mt-1.5 block">
+            <Link to={`/products/${product.id}`} className="mt-1.5 block">
               <h3 className="font-display text-[1.7rem] leading-none text-ink transition hover:text-bronze">
                 {product.name}
               </h3>
@@ -66,7 +66,7 @@ const ProductCard = ({ product }) => {
               type="button"
             >
               <FiShoppingBag />
-              Ajouter
+              Ajouter au panier
             </button>
           </div>
         </div>

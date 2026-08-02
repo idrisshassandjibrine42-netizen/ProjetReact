@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SectionHeading from "../components/common/SectionHeading";
-import ProductsCards from "../components/products/ProductsCards.jsx";
+import ProductsCards from "../components/products/productsCards.jsx";
 import axios from "axios";
 
 function Products() {
@@ -9,25 +9,53 @@ function Products() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
-  const getFiltredProducts = () => {
-    const filtredProduct = products.filter(
-      (product) => product.price >= minPrice && product.price <= maxPrice,
+  const normalizeProduct = (product, index) => ({
+    ...product,
+    id: product.id ?? product._id ?? index + 1,
+    _id: product._id ?? product.id ?? index + 1,
+    slug:
+      product.slug ??
+      product.name
+        ?.toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, ""),
+    imageKey: product.imageKey ?? product.slug ?? product.name,
+    price: Number(product.price || 0),
+  });
+
+  const getFilteredProducts = () => {
+    const filteredProducts = products.filter(
+      (product) =>
+        product.price >= Number(minPrice || 0) &&
+        product.price <= Number(maxPrice || Number.MAX_SAFE_INTEGER),
     );
-    setProducts(filtredProduct);
+    setProducts(filteredProducts);
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const getProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5001/api/products");
-        setProducts(response.data);
+        if (!isMounted) return;
+
+        const normalizedProducts = (response.data || []).map(normalizeProduct);
+        setProducts(normalizedProducts);
         setLoading(false);
       } catch (error) {
         console.error("Erreur lors de la récupération des produits:", error);
+        if (!isMounted) return;
+        setProducts([]);
+        setLoading(true);
       }
     };
 
     getProducts();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -57,7 +85,7 @@ function Products() {
           <button
             className="lux-button-primary min-w-[150px] text-center"
             type="button"
-            onClick={getFiltredProducts}
+            onClick={getFilteredProducts}
           >
             Filtrer
           </button>

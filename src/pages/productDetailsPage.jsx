@@ -1,8 +1,12 @@
+import { FiShoppingBag } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import productsData from "../data/productsData";
+import { getProductImageUrl } from "../utils/productImage";
+import { useCart } from "../hooks/useCart";
 
 function ProductDetailsPage() {
   const { id } = useParams();
+  const { addToCart } = useCart();
   const product = productsData.find((item) => item.id === parseInt(id, 10));
 
   if (!product) {
@@ -11,7 +15,7 @@ function ProductDetailsPage() {
         <h1 className="font-display text-3xl text-ink">Produit introuvable</h1>
 
         <p className="mt-3 text-graphite">
-          parfum n'existe pas dans la collection
+          le produit n'existe pas dans la collection
         </p>
 
         <Link to="/products" className="lux-Button-primary mt-6">
@@ -21,12 +25,14 @@ function ProductDetailsPage() {
     );
   }
 
+  const imageUrl = getProductImageUrl(product, 1);
+
   return (
     <section className="pb-12 md:pb-16">
       <div className="lux-container flex flex-col gap-10 py-10 lg:flex-row">
         <div className="overflow-hidden bg-white shadow-lg lg:w-[55%]">
           <img
-            src={product.imageKey}
+            src={imageUrl}
             alt={product.name}
             className="h-full w-full object-cover object-center"
           />
@@ -58,9 +64,19 @@ function ProductDetailsPage() {
             {product.available ? "Disponible" : "Indisponible"}
           </p>
 
-          <button type="button" className="lux-button-primary mt-8 w-fit">
+          <button
+            type="button"
+            className="lux-button-primary mt-8 w-fit"
+            onClick={() => addToCart(product)}
+          >
+            <FiShoppingBag />
             Ajouter au panier
           </button>
+          <Link to="/products" className="lux-Button-primary mt-6">
+            <button type="button" className="lux-button-primary mt-8 w-fit">
+              Retour à la collection
+            </button>
+          </Link>
         </div>
       </div>
     </section>
