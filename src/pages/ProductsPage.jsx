@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SectionHeading from "../components/common/SectionHeading";
 import ProductsCards from "../components/products/productsCards.jsx";
 import axios from "axios";
+import productsData from "../data/productsData.js";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -37,16 +38,35 @@ function Products() {
 
     const getProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/products");
+        const response = await axios.get(
+          "https://backend-qv04.onrender.com/api/products",
+          {
+            timeout: 4000,
+          },
+        );
         if (!isMounted) return;
 
-        const normalizedProducts = (response.data || []).map(normalizeProduct);
+        const payload = response.data;
+        const sourceProducts = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.products)
+            ? payload.products
+            : [];
+
+        const normalizedProducts = sourceProducts.map(normalizeProduct);
         setProducts(normalizedProducts);
         setLoading(false);
       } catch (error) {
-        console.error("Erreur lors de la récupération des produits:", error);
+        console.warn(
+          "Backend indisponible, utilisation des produits locaux :",
+          error,
+        );
         if (!isMounted) return;
-        setProducts([]);
+
+        const fallbackProducts = productsData.map((product, index) =>
+          normalizeProduct(product, index),
+        );
+        setProducts(fallbackProducts);
         setLoading(false);
       }
     };

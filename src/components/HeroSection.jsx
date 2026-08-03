@@ -6,7 +6,7 @@ function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-ink text-white ">
       <img
-        src="http://localhost:5001/images/hero/home-hero.webp"
+        src="https://backend-qv04.onrender.com/images/hero/home-hero.webp"
         alt="Hero Image"
         className="absolute inset-0 h-full w-full object-cover object-center "
       />
@@ -20,7 +20,7 @@ function HeroSection() {
           text={HomeContent.hero.text}
         />
         <div className="flex mt-8 flex-col gap-4 sm:flex-row">
-          <Button link="/Products" text="Decouvrir" />
+          <Button link="/products" text="Decouvrir" />
         </div>
       </div>
     </section>

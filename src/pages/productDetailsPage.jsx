@@ -1,7 +1,6 @@
 import { FiShoppingBag } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import productsData from "../data/productsData";
-import { getProductImageUrl } from "../utils/productImage";
 import { useCart } from "../hooks/useCart";
 
 function ProductDetailsPage() {
@@ -25,14 +24,12 @@ function ProductDetailsPage() {
     );
   }
 
-  const imageUrl = getProductImageUrl(product, 1);
-
   return (
     <section className="pb-12 md:pb-16">
       <div className="lux-container flex flex-col gap-10 py-10 lg:flex-row">
         <div className="overflow-hidden bg-white shadow-lg lg:w-[55%]">
           <img
-            src={imageUrl}
+            src={`https://backend-qv04.onrender.com/images/product/${product.imageKey}-1.png`}
             alt={product.name}
             className="h-full w-full object-cover object-center"
           />

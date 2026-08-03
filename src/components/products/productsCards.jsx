@@ -1,11 +1,10 @@
 import { FiShoppingBag, FiStar } from "react-icons/fi";
 import { useCart } from "../../hooks/useCart";
 import { Link } from "react-router-dom";
-import { getProductImageUrl } from "../../utils/productImage";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
-  const imageUrl = getProductImageUrl(product, 1);
+
   return (
     <article className="lux-cart group overflow-hidden">
       <div
@@ -20,7 +19,7 @@ const ProductCard = ({ product }) => {
         <Link to={`/products/${product.id}`} className="block h-full w-full">
           <div className="absolute inset-0 bg-glow opacity-25 " />
           <img
-            src={imageUrl}
+            src={`https://backend-qv04.onrender.com/images/product/${product.imageKey}-1.png`}
             alt={product.name}
             className="h-auto w-auto object-cover object-center transition duration-500 group-hover:scale-105"
           />

@@ -1,5 +1,4 @@
 import { useCart } from "../hooks/useCart";
-import { getProductImageUrl } from "../utils/productImage";
 
 function Cart() {
   const { cartItems, addToCart, removeFromCart, clearCart, totalPrice } =
@@ -16,16 +15,15 @@ function Cart() {
           <div className="mt-8 space-y-4">
             {cartItems.map((item) => {
               const itemId = item?._id ?? item?.id;
-              const imageUrl = getProductImageUrl(item, 1) || item.image || "";
+
+              const img = `https://backend-qv04.onrender.com/images/product/${item.imageKey}-1.png`;
 
               return (
                 <div
                   key={itemId}
                   className="flex flex-wrap items-center gap-4 border border-slate-200 bg-white p-4 shadow-sm"
                 >
-                  {imageUrl ? (
-                    <img src={imageUrl} alt={item.name} width={120} />
-                  ) : null}
+                  {img ? <img src={img} alt={item.name} width={120} /> : null}
 
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-ink">

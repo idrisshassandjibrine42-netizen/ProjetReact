@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import productsData from "../data/productsData.js";
 
 function AdminDashboard() {
   const [products, setProducts] = useState([]);
@@ -14,9 +15,24 @@ function AdminDashboard() {
 
   const navigate = useNavigate();
   const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5001/api/products";
+    import.meta.env.VITE_API_URL ||
+    (typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? "http://localhost:5001/api/products"
+      : "https://backend-qv04.onrender.com/api/products");
   const IMAGE_BASE_URL =
-    import.meta.env.VITE_IMAGE_URL || "http://localhost:5001";
+    import.meta.env.VITE_IMAGE_URL ||
+    "https://backend-qv04.onrender.com/images/product";
+
+  const normalizeProduct = (product, index = 0) => ({
+    ...product,
+    _id: product._id ?? product.id ?? String(index + 1),
+    id: product.id ?? product._id ?? index + 1,
+    name: product.name ?? "Produit sans nom",
+    price: Number(product.price || 0),
+    imageKey: product.imageKey ?? product.slug ?? product.name,
+  });
+
+  const getFallbackProducts = () => productsData.map(normalizeProduct);
 
   //sécurité pour l'accès à la page admin
   useEffect(() => {
@@ -30,13 +46,22 @@ function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const rest = await fetch(API_URL);
+      const rest = await fetch(API_URL, {
+        headers: { Accept: "application/json" },
+      });
       if (!rest.ok) throw new Error("Impossible de charger les produits");
-      const data = await rest.json();
-      setProducts(data);
+
+      const payload = await rest.json();
+      const sourceProducts = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload?.products)
+          ? payload.products
+          : [];
+
+      setProducts(sourceProducts.map(normalizeProduct));
     } catch (error) {
-      console.error("Erreur lors du chargement des produits :", error);
-      setProducts([]);
+      console.warn("Chargement distant impossible, utilisation des produits locaux :", error);
+      setProducts(getFallbackProducts());
     }
   };
 
@@ -46,47 +71,98 @@ function AdminDashboard() {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
-      await fetch(`${API_URL}/${id}`, {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
-      fetchProducts(); // recharge automatiquement la liste des produits après suppression
+
+      if (!response.ok) throw new Error("Suppression impossible");
+
+      setProducts((prev) =>
+        prev.filter((product) => (product._id ?? product.id) !== id),
+      );
+    } catch (error) {
+      console.warn("Suppression impossible, retrait local :", error);
+      setProducts((prev) =>
+        prev.filter((product) => (product._id ?? product.id) !== id),
+      );
     }
   };
 
   // Enregistrement d'un nouveau produit ou mise à jour d'un produit existant
   const handleSaveProduct = async (e) => {
     e.preventDefault();
-    const productData = { name, price: Number(price), imageKey, description };
+    const productData = {
+      name: name.trim(),
+      price: Number(price),
+      imageKey: imageKey.trim(),
+      description: description.trim(),
+    };
 
-    if (editingId) {
-      // modifier un produit existant
-      await fetch(`${API_URL}/${editingId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      let response;
+      if (editingId) {
+        response = await fetch(`${API_URL}/${editingId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(productData),
+        });
+      } else {
+        response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(productData),
+        });
+      }
+
+      if (!response.ok) throw new Error("Enregistrement impossible");
+
+      const savedProduct = await response.json();
+      const normalizedSavedProduct = normalizeProduct(savedProduct, products.length);
+
+      setProducts((prev) =>
+        editingId
+          ? prev.map((product) =>
+              (product._id ?? product.id) === editingId
+                ? normalizedSavedProduct
+                : product,
+            )
+          : [normalizedSavedProduct, ...prev],
+      );
+    } catch (error) {
+      console.warn("Sauvegarde distante impossible, mise à jour locale :", error);
+      const tempProduct = normalizeProduct(
+        {
+          ...productData,
+          _id: editingId ?? String(Date.now()),
+          id: editingId ?? Date.now(),
         },
-        body: JSON.stringify(productData),
-      });
-    } else {
-      // ajouter un nouveau produit
-      await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      });
+        products.length,
+      );
+
+      setProducts((prev) =>
+        editingId
+          ? prev.map((product) =>
+              (product._id ?? product.id) === editingId ? tempProduct : product,
+            )
+          : [tempProduct, ...prev],
+      );
     }
 
-    // Réinitialiser le formulaire et recharger les produits
     setName("");
     setPrice("");
     setImageKey("");
     setDescription("");
     setEditingId(null);
     setShowAddForm(false);
-    fetchProducts();
   };
 
   const startEdit = (product) => {
@@ -188,11 +264,7 @@ function AdminDashboard() {
           </thead>
           <tbody className="divide-y divide-line text-sm text-ink">
             {products.map((product) => {
-              const imageKey =
-                product.imageKey ||
-                product.slug ||
-                product.name?.toLowerCase().replace(/\s+/g, "-");
-              const imageSrc = `${IMAGE_BASE_URL}/images/product/${imageKey}-1.png`;
+              const imagePath = `${IMAGE_BASE_URL}/${product.imageKey ?? product.slug ?? "default"}-1.png`;
 
               return (
                 <tr
@@ -201,12 +273,12 @@ function AdminDashboard() {
                 >
                   <td className="p-4">
                     <img
-                      src={imageSrc}
+                      src={imagePath}
                       alt={product.name}
                       className="h-12 w-12 object-contain bg-gray-50 rounded p-1"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = `${IMAGE_BASE_URL}/images/product/default.png`;
+                        e.currentTarget.src = `${IMAGE_BASE_URL}/default.png`;
                       }}
                     />
                   </td>
