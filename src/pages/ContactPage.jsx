@@ -22,7 +22,7 @@ function ContactPage() {
 
   return (
     <section className="lux-container py-16">
-      <h1 className="font-display text-4xl text-ink">Contact</h1>
+      <h1 className="font-display text-4xl text-ink">Contact-nous</h1>
       <p className="mt-3 max-w-2xl text-graphite">
         Envoyez un message simple. Cette page pourra etre connectee au backend
         plus tard.
