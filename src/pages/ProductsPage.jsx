@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import SectionHeading from "../components/common/SectionHeading";
 import ProductsCards from "../components/products/productsCards.jsx";
 import axios from "axios";
 import productsData from "../data/productsData.js";
@@ -7,8 +6,8 @@ import productsData from "../data/productsData.js";
 function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const normalizeProduct = (product, index) => ({
     ...product,
@@ -85,30 +84,56 @@ function Products() {
   }
   return (
     <section className="lux-container py-16">
-      <SectionHeading eyebrow="Nos produits" />
-      <form>
-        <div className="form-zone">
-          <label>MinPrice :</label>
-          <input
-            type="number"
-            name="minPrice"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-          />
-          <label>MaxPrice :</label>
-          <input
-            type="number"
-            name="maxPrice"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-          />
-          <button
-            className="lux-button-primary min-w-[150px] text-center"
-            type="button"
-            onClick={getFilteredProducts}
-          >
-            Filtrer
-          </button>
+      <h1>Nos produits</h1>
+
+      <form className="my-6">
+        <div className="flex flex-wrap items-end gap-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+          {/* Prix minimum */}
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor="minPrice"
+              className="whitespace-nowrap font-medium text-gray-700"
+            >
+              Prix minimum :
+            </label>
+            <input
+              id="minPrice"
+              type="number"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              placeholder="400"
+              className="w-24 rounded border border-gray-300 px-2 py-1"
+            />
+          </div>
+
+          {/* Prix maximum */}
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor="maxPrice"
+              className="whitespace-nowrap font-medium text-gray-700"
+            >
+              Prix maximum :
+            </label>
+            <input
+              id="maxPrice"
+              type="number"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              placeholder="600"
+              className="w-24 rounded border border-gray-300 px-2 py-1"
+            />
+          </div>
+
+          {/* Bouton à droite */}
+          <div className="ml-auto">
+            <button
+              type="button"
+              onClick={getFilteredProducts}
+              className="lux-button-primary min-w-[150px]"
+            >
+              Filtrer
+            </button>
+          </div>
         </div>
       </form>
 

@@ -65,7 +65,7 @@ export function CartProvider({ children }) {
     setCartItems([]);
   };
 
-  const totalPrice = useMemo(
+  /* const totalPrice = useMemo(
     () =>
       cartItems.reduce(
         (total, item) =>
@@ -73,11 +73,30 @@ export function CartProvider({ children }) {
         0,
       ),
     [cartItems],
+  );*/
+
+  const totalPrice = useMemo(
+    () =>
+      cartItems.reduce((total, item) => {
+        if (!item) return total;
+
+        return total + Number(item.price || 0) * Number(item.quantity || 1);
+      }, 0),
+    [cartItems],
   );
 
-  const totalQuantity = useMemo(
+  /*const totalQuantity = useMemo(
     () =>
       cartItems.reduce((total, item) => total + Number(item.quantity || 1), 0),
+    [cartItems],
+  );*/
+  const totalQuantity = useMemo(
+    () =>
+      cartItems.reduce((total, item) => {
+        if (!item) return total;
+
+        return total + Number(item.quantity || 1);
+      }, 0),
     [cartItems],
   );
 

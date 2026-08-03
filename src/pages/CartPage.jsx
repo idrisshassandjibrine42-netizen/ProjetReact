@@ -14,16 +14,18 @@ function Cart() {
         <>
           <div className="mt-8 space-y-4">
             {cartItems.map((item) => {
-              const itemId = item?._id ?? item?.id;
-
-              const img = `https://backend-qv04.onrender.com/images/product/${item.imageKey}-1.png`;
+              if (!item) return null;
 
               return (
                 <div
-                  key={itemId}
+                  key={item.id}
                   className="flex flex-wrap items-center gap-4 border border-slate-200 bg-white p-4 shadow-sm"
                 >
-                  {img ? <img src={img} alt={item.name} width={120} /> : null}
+                  <img
+                    src={`https://backend-qv04.onrender.com/images/product/${item.imageKey}-1.png`}
+                    alt={item.name}
+                    className="h-32 w-32 rounded-lg border border-slate-200 object-cover shadow-md transition-transform duration-300 hover:scale-105"
+                  />
 
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-ink">
@@ -37,7 +39,7 @@ function Cart() {
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => removeFromCart(itemId)}
+                      onClick={() => removeFromCart(item.id)}
                       className="rounded border px-3 py-1 hover:bg-red-600 hover:text-white"
                     >
                       -
@@ -56,7 +58,7 @@ function Cart() {
 
                   <button
                     type="button"
-                    onClick={() => removeFromCart(itemId, true)}
+                    onClick={() => removeFromCart(item.id, true)}
                     className="rounded border border-red-300 px-3 py-1 text-red-600 hover:bg-red-600 hover:text-white"
                   >
                     Supprimer
