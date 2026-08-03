@@ -47,7 +47,7 @@ function Products() {
         console.error("Erreur lors de la récupération des produits:", error);
         if (!isMounted) return;
         setProducts([]);
-        setLoading(true);
+        setLoading(false);
       }
     };
 
