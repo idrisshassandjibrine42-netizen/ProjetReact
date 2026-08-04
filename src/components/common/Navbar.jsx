@@ -32,6 +32,9 @@ function Navbar() {
           <Link to="/cart" onClick={() => setIsOpen(false)}>
             Panier ({totalItems})
           </Link>
+          <Link to="/admin" onClick={() => setIsOpen(false)}>
+            Admin
+          </Link>
         </nav>
       </div>
     </header>

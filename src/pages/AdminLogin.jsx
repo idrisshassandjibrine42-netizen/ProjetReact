@@ -1,6 +1,8 @@
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function AdminLogin() {
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -8,7 +10,7 @@ function AdminLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
     // Identifiants d'administration temporaires
-    if (username === "admin" && password === "luxwatches2026") {
+    if (username === "admin" && password === "maison2026") {
       localStorage.setItem("lux_admin_token", "authenticated_secure_session");
       navigate("/admin/dashboard");
     } else {
@@ -37,14 +39,26 @@ function AdminLogin() {
           </div>
           <div>
             <label className="lux-label text-sm">Mot de passe</label>
-            <input
-              type="password"
-              className="lux-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="lux-input pr-10"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
           </div>
+
           <button type="submit" className="lux-button-primary w-full mt-2">
             Se connecter
           </button>

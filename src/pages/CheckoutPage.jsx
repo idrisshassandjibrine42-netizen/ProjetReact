@@ -1,3 +1,4 @@
+import { useCart } from "../hooks/useCart";
 import { useState } from "react";
 
 function CheckoutPage() {
@@ -8,14 +9,7 @@ function CheckoutPage() {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
 
-  const orderItems = [
-    { name: "Aurum Celestia", price: 12400 },
-    { name: "Noir Regatta", price: 15800 },
-  ];
-
-  const subtotal = orderItems.reduce((total, item) => {
-    return total + item.price;
-  }, 0);
+  const { cartItems, totalPrice } = useCart();
 
   function validateForm() {
     const newErrors = {};
@@ -107,10 +101,10 @@ function CheckoutPage() {
               onChange={(e) => setCity(e.target.value)}
             >
               <option value="">Sélectionnez votre ville</option>
-              <option value="ville1">Ville 1</option>
-              <option value="ville2">Ville 2</option>
-              <option value="ville3">Ville 3</option>
-              <option value="ville4">Ville 4</option>
+              <option value="ville1">Tunis</option>
+              <option value="ville2">Sousse</option>
+              <option value="ville3">Sfax</option>
+              <option value="ville4">Nabeul</option>
             </select>
           </div>
           <div className="mt-5">
@@ -138,27 +132,50 @@ function CheckoutPage() {
         <aside className="lux-card lg:w-[360px]">
           <h2 className="font-display text-2xl text-ink">Résumé</h2>
 
-          <div className="mt-6 space-y-4">
-            {orderItems.map((item) => (
-              <div key={item.name} className="flex justify-between gap-4">
-                <p className="text-sm text-graphite">{item.name}</p>
-                <p className="text-sm font-semibold text-ink">
-                  {item.price.toLocaleString()} DT
-                </p>
-              </div>
-            ))}
-          </div>
+          {cartItems.length === 0 ? (
+            <p className="mt-6 text-graphite">Votre panier est vide.</p>
+          ) : (
+            <>
+              <div className="mt-6 space-y-4">
+                {cartItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={`https://backend-qv04.onrender.com/images/product/${item.imageKey}-1.png`}
+                        alt={item.name}
+                        className="h-14 w-14 rounded object-cover"
+                      />
 
-          <div className="mt-6 border-t border-line pt-4">
-            <div className="flex justify-between">
-              <span className="text-sm uppercase tracking-[0.18em] text-graphite">
-                Total
-              </span>
-              <span className="font-display text-2xl text-ink">
-                {subtotal.toLocaleString()} DT
-              </span>
-            </div>
-          </div>
+                      <div>
+                        <p className="font-medium text-ink">{item.name}</p>
+                        <p className="text-sm text-graphite">
+                          Quantité : {item.quantity}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="font-semibold text-ink">
+                      {(item.price * item.quantity).toLocaleString()} TND
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 border-t border-line pt-4">
+                <div className="flex justify-between">
+                  <span className="text-sm uppercase tracking-[0.18em] text-graphite">
+                    Total
+                  </span>
+                  <span className="font-display text-2xl text-ink">
+                    {Number(totalPrice).toLocaleString()} TND
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </aside>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 
 function Cart() {
@@ -79,6 +80,12 @@ function Cart() {
             >
               Vider le panier
             </button>
+            <Link
+              to="/checkout"
+              className="rounded bg-gold px-4 py-2 text-white hover:bg-yellow-700 transition"
+            >
+              Passer à la commande
+            </Link>
           </div>
         </>
       )}

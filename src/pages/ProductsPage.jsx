@@ -5,6 +5,7 @@ import productsData from "../data/productsData.js";
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -24,12 +25,18 @@ function Products() {
   });
 
   const getFilteredProducts = () => {
-    const filteredProducts = products.filter(
+    const filteredProducts = allProducts.filter(
       (product) =>
         product.price >= Number(minPrice || 0) &&
         product.price <= Number(maxPrice || Number.MAX_SAFE_INTEGER),
     );
+
     setProducts(filteredProducts);
+  };
+  const showAllProducts = () => {
+    setProducts(allProducts);
+    setMinPrice("");
+    setMaxPrice("");
   };
 
   useEffect(() => {
@@ -54,6 +61,7 @@ function Products() {
 
         const normalizedProducts = sourceProducts.map(normalizeProduct);
         setProducts(normalizedProducts);
+        setAllProducts(normalizedProducts);
         setLoading(false);
       } catch (error) {
         console.warn(
@@ -66,6 +74,7 @@ function Products() {
           normalizeProduct(product, index),
         );
         setProducts(fallbackProducts);
+        setAllProducts(fallbackProducts);
         setLoading(false);
       }
     };
@@ -132,6 +141,15 @@ function Products() {
               className="lux-button-primary min-w-[150px]"
             >
               Filtrer
+            </button>
+          </div>
+          <div className="ml-auto">
+            <button
+              type="button"
+              onClick={showAllProducts}
+              className="lux-button-primary min-w-[150px]"
+            >
+              Tous les produits
             </button>
           </div>
         </div>
