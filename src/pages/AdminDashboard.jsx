@@ -60,7 +60,10 @@ function AdminDashboard() {
 
       setProducts(sourceProducts.map(normalizeProduct));
     } catch (error) {
-      console.warn("Chargement distant impossible, utilisation des produits locaux :", error);
+      console.warn(
+        "Chargement distant impossible, utilisation des produits locaux :",
+        error,
+      );
       setProducts(getFallbackProducts());
     }
   };
@@ -126,7 +129,10 @@ function AdminDashboard() {
       if (!response.ok) throw new Error("Enregistrement impossible");
 
       const savedProduct = await response.json();
-      const normalizedSavedProduct = normalizeProduct(savedProduct, products.length);
+      const normalizedSavedProduct = normalizeProduct(
+        savedProduct,
+        products.length,
+      );
 
       setProducts((prev) =>
         editingId
@@ -138,7 +144,10 @@ function AdminDashboard() {
           : [normalizedSavedProduct, ...prev],
       );
     } catch (error) {
-      console.warn("Sauvegarde distante impossible, mise à jour locale :", error);
+      console.warn(
+        "Sauvegarde distante impossible, mise à jour locale :",
+        error,
+      );
       const tempProduct = normalizeProduct(
         {
           ...productData,

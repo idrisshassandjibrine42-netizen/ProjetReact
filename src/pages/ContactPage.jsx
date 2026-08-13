@@ -24,8 +24,8 @@ function ContactPage() {
     <section className="lux-container py-16">
       <h1 className="font-display text-4xl text-ink">Contact-nous</h1>
       <p className="mt-3 max-w-2xl text-graphite">
-        Envoyez un message simple. Cette page pourra etre connectee au backend
-        plus tard.
+        Envoyez un message simple. Nous vous répondrons dans les plus brefs
+        délais.
       </p>
 
       <form onSubmit={handleSubmit} className="lux-card mt-8 max-w-2xl">

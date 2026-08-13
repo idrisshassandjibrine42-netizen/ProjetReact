@@ -1,5 +1,6 @@
 import { useCart } from "../hooks/useCart";
 import { useState } from "react";
+import axios from "axios";
 
 function CheckoutPage() {
   const [fullName, setFullName] = useState("");
@@ -32,7 +33,7 @@ function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -40,12 +41,48 @@ function CheckoutPage() {
       return;
     }
 
-    setMessage("Commande préparée avec succès.");
-    setFullName("");
-    setPhone("");
-    setCity("");
-    setAdresse("");
-    setErrors({});
+    if (cartItems.length === 0) {
+      setMessage("Votre panier est vide.");
+      return;
+    }
+
+    try {
+      const orderData = {
+        fullName,
+        phone,
+        city,
+        adresse,
+
+        items: cartItems.map((item) => ({
+          productId: item._id || item.id,
+          quantity: item.quantity,
+        })),
+      };
+
+      const response = await axios.post(
+        "https://backend-qv04.onrender.com/api/orders",
+        orderData,
+      );
+
+      console.log("Commande :", response.data);
+
+      setMessage("Commande préparée avec succès.");
+
+      setFullName("");
+      setPhone("");
+      setCity("");
+      setAdresse("");
+      setErrors({});
+    } catch (error) {
+      console.error(
+        "Erreur création commande :",
+        error.response?.data || error.message,
+      );
+
+      setMessage(
+        error.response?.data?.message || "Impossible de créer la commande.",
+      );
+    }
   }
   return (
     <section className="lux-container py-16">
@@ -59,7 +96,7 @@ function CheckoutPage() {
         </p>
       </div>
       <div className="flex flex-col-reverse gap-10 lg:flex-row">
-        <form className="lux-card flex-1">
+        <form className="lux-card flex-1" onSubmit={handleSubmit}>
           <h2 className="font-display text-2xl text-ink">
             Informations de livraison
           </h2>
@@ -101,10 +138,10 @@ function CheckoutPage() {
               onChange={(e) => setCity(e.target.value)}
             >
               <option value="">Sélectionnez votre ville</option>
-              <option value="ville1">Tunis</option>
-              <option value="ville2">Sousse</option>
-              <option value="ville3">Sfax</option>
-              <option value="ville4">Nabeul</option>
+              <option value="Tunis">Tunis</option>
+              <option value="Sousse">Sousse</option>
+              <option value="Sfax">Sfax</option>
+              <option value="Nabeul">Nabeul</option>
             </select>
           </div>
           <div className="mt-5">
@@ -120,7 +157,7 @@ function CheckoutPage() {
             />
           </div>
 
-          <button onClick={handleSubmit} className="lux-button-primary mt-8">
+          <button type="submit" className="lux-button-primary mt-8">
             Confirmer la commande
           </button>
 
