@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import productsData from "../data/productsData.js";
 
 function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
 
-  //Etat pour les champs du formulaire
+  //Etats pour le formulaire d'ajout de produit
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [imageKey, setImageKey] = useState("");
@@ -14,27 +13,10 @@ function AdminDashboard() {
   const [editingId, setEditingId] = useState(null);
 
   const navigate = useNavigate();
-  const API_URL =
-    import.meta.env.VITE_API_URL ||
-    (typeof window !== "undefined" && window.location.hostname === "localhost"
-      ? "http://localhost:5001/api/products"
-      : "https://backend-qv04.onrender.com/api/products");
-  const IMAGE_BASE_URL =
-    import.meta.env.VITE_IMAGE_URL ||
-    "https://backend-qv04.onrender.com/images/product";
+  const API_URL = "https://backend-qv04.onrender.com/api/products";
+  const IMAGES_URL = "https://backend-qv04.onrender.com/images/product/";
 
-  const normalizeProduct = (product, index = 0) => ({
-    ...product,
-    _id: product._id ?? product.id ?? String(index + 1),
-    id: product.id ?? product._id ?? index + 1,
-    name: product.name ?? "Produit sans nom",
-    price: Number(product.price || 0),
-    imageKey: product.imageKey ?? product.slug ?? product.name,
-  });
-
-  const getFallbackProducts = () => productsData.map(normalizeProduct);
-
-  //sécurité pour l'accès à la page admin
+  // Sécurité d'acces locale
   useEffect(() => {
     const token = localStorage.getItem("lux_admin_token");
     if (!token) {
@@ -45,27 +27,9 @@ function AdminDashboard() {
   }, []);
 
   const fetchProducts = async () => {
-    try {
-      const rest = await fetch(API_URL, {
-        headers: { Accept: "application/json" },
-      });
-      if (!rest.ok) throw new Error("Impossible de charger les produits");
-
-      const payload = await rest.json();
-      const sourceProducts = Array.isArray(payload)
-        ? payload
-        : Array.isArray(payload?.products)
-          ? payload.products
-          : [];
-
-      setProducts(sourceProducts.map(normalizeProduct));
-    } catch (error) {
-      console.warn(
-        "Chargement distant impossible, utilisation des produits locaux :",
-        error,
-      );
-      setProducts(getFallbackProducts());
-    }
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    setProducts(data);
   };
 
   const handleLogout = () => {
@@ -74,119 +38,58 @@ function AdminDashboard() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/${id}`, {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
+      await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
-
-      if (!response.ok) throw new Error("Suppression impossible");
-
-      setProducts((prev) =>
-        prev.filter((product) => (product._id ?? product.id) !== id),
-      );
-    } catch (error) {
-      console.warn("Suppression impossible, retrait local :", error);
-      setProducts((prev) =>
-        prev.filter((product) => (product._id ?? product.id) !== id),
-      );
+      fetchProducts();
     }
   };
 
-  // Enregistrement d'un nouveau produit ou mise à jour d'un produit existant
+  // Enregistrer (ajouter ou modifier)
   const handleSaveProduct = async (e) => {
     e.preventDefault();
-    const productData = {
-      name: name.trim(),
-      price: Number(price),
-      imageKey: imageKey.trim(),
-      description: description.trim(),
-    };
-
-    try {
-      let response;
-      if (editingId) {
-        response = await fetch(`${API_URL}/${editingId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(productData),
-        });
-      } else {
-        response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(productData),
-        });
-      }
-
-      if (!response.ok) throw new Error("Enregistrement impossible");
-
-      const savedProduct = await response.json();
-      const normalizedSavedProduct = normalizeProduct(
-        savedProduct,
-        products.length,
-      );
-
-      setProducts((prev) =>
-        editingId
-          ? prev.map((product) =>
-              (product._id ?? product.id) === editingId
-                ? normalizedSavedProduct
-                : product,
-            )
-          : [normalizedSavedProduct, ...prev],
-      );
-    } catch (error) {
-      console.warn(
-        "Sauvegarde distante impossible, mise à jour locale :",
-        error,
-      );
-      const tempProduct = normalizeProduct(
-        {
-          ...productData,
-          _id: editingId ?? String(Date.now()),
-          id: editingId ?? Date.now(),
-        },
-        products.length,
-      );
-
-      setProducts((prev) =>
-        editingId
-          ? prev.map((product) =>
-              (product._id ?? product.id) === editingId ? tempProduct : product,
-            )
-          : [tempProduct, ...prev],
-      );
+    const productData = { name, price: Number(price), imageKey, description };
+    if (editingId) {
+      // mode modification (put)
+      await fetch(`${API_URL}/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
+      });
+    } else {
+      // mode ajout (POST)
+      await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
+      });
     }
-
+    // Reinitialisation
     setName("");
     setPrice("");
     setImageKey("");
     setDescription("");
     setEditingId(null);
     setShowAddForm(false);
+    fetchProducts();
   };
 
   const startEdit = (product) => {
-    setEditingId(product.id);
+    setEditingId(product._id);
     setName(product.name);
     setPrice(product.price);
     setImageKey(product.imageKey);
-    setDescription(product.description);
+    setDescription(product.description || "");
     setShowAddForm(true);
   };
+
   return (
-    <section className="lux-container py-12 max-w-3xl mx-auto">
+    <section className="lux-container py-12">
       <div className="flex justify-between items-center mb-8 border-b pb-4 border-line">
-        <h1 className="font-display text-3xl text-ink uppercase tracking-wider">
-          Espace Admin
+        <h1 className="font-display text-3xl text-ink uppercase tracking-wide">
+          {" "}
+          Gestion-Admin
         </h1>
         <div className="flex gap-4">
           <button
@@ -206,7 +109,8 @@ function AdminDashboard() {
           </button>
         </div>
       </div>
-      {/* Formulaire d'ajout ou de modification de produit */}
+
+      {/*Formulaire dynamique */}
       {showAddForm && (
         <form
           onSubmit={handleSaveProduct}
@@ -215,9 +119,9 @@ function AdminDashboard() {
           <h3 className="font-display text-lg uppercase text-ink">
             {editingId ? "Modifier le produit" : "Ajouter un produit"}
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="gri grid-cols-2 gap-4">
             <div>
-              <label className="lux-label">Nom du modèle</label>
+              <label className="lux-label">Nom du modéle</label>
               <input
                 type="text"
                 className="lux-input"
@@ -256,60 +160,51 @@ function AdminDashboard() {
             />
           </div>
           <button type="submit" className="lux-button-primary bg-graphite">
-            {editingId ? "Enregistrer les modifications" : "Publier le produit"}
+            {editingId
+              ? "Enregistrer les modifications"
+              : "Publier sur le catalogue"}
           </button>
         </form>
       )}
-      {/* Liste tabulaire des produits */}
+      {/*liste de tabulaire des produits*/}
       <div className="overflow-x-auto bg-white rounded shadow-sm border border-line">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50 border-b border-line text-xs uppercase text-graphite tracking-wider font-semibold">
               <th className="p-4">Visuel</th>
-              <th className="p-4">Modèle</th>
+              <th className="p-4">Modéle</th>
               <th className="p-4">Tarif</th>
-              <th className="p-4 text-right">Actions</th>
+              <th className="p-4 text-right">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line text-sm text-ink">
-            {products.map((product) => {
-              const imagePath = `${IMAGE_BASE_URL}/${product.imageKey ?? product.slug ?? "default"}-1.png`;
-
-              return (
-                <tr
-                  key={product._id}
-                  className="hover:bg-gray-50/50 transition"
-                >
-                  <td className="p-4">
-                    <img
-                      src={imagePath}
-                      alt={product.name}
-                      className="h-12 w-12 object-contain bg-gray-50 rounded p-1"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = `${IMAGE_BASE_URL}/default.png`;
-                      }}
-                    />
-                  </td>
-                  <td className="p-4 font-medium">{product.name}</td>
-                  <td className="p-4">{product.price.toLocaleString()} DT</td>
-                  <td className="p-4 text-right space-x-3">
-                    <button
-                      onClick={() => startEdit(product)}
-                      className="text-gold hover:underline"
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      onClick={() => handleDelete(product._id)}
-                      className="text-red-600 hover:underline"
-                    >
-                      Supprimer
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {products.map((product) => (
+              <tr key={product._id} className="hover:bg-gray-50/50 transition">
+                <td className="p-4">
+                  <img
+                    src={`${IMAGES_URL}/${product.imageKey}-1.png`}
+                    alt={product.name}
+                    className="w-12 h-12 object-contain bg-gray-50 rounded p-1"
+                  />
+                </td>
+                <td className="p-4 font-medium">{product.name}</td>
+                <td className="p-4">{product.price.toLocaleString()} DT</td>
+                <td className="p-4 text-right space-x-3">
+                  <button
+                    onClick={() => startEdit(product)}
+                    className="text-gold hover: underline"
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="text-red-600 hover:underline"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
