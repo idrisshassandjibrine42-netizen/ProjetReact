@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = "https://backend-qv04.onrender.com/api/contacts";
 
@@ -132,6 +133,11 @@ export default function AdminContactsPage() {
           <button onClick={fetchContacts} className="lux-button-primary">
             🔄 Actualiser
           </button>
+          <Link to="/orders">
+            <button type="button" className="lux-button-primary ">
+              Liste de commandes
+            </button>
+          </Link>
         </div>
 
         {/* Statistiques */}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = "https://backend-qv04.onrender.com/api/orders";
 
@@ -317,6 +318,12 @@ function OrdersPage() {
           <button onClick={exportCSV} className="lux-button-primary">
             📥 Exporter CSV
           </button>
+
+          <Link to="/contacts1">
+            <button type="button" className="lux-button-primary ">
+              Liste de messages
+            </button>
+          </Link>
         </div>
       </div>
 
