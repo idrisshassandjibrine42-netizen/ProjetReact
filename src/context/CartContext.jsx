@@ -23,6 +23,42 @@ export function CartProvider({ children }) {
   }, [cartItems]);
 
   const addToCart = (product) => {
+    if (!product?._id) {
+      console.error(
+        "Ce produit ne possède pas un _id MongoDB valide :",
+        product,
+      );
+      return;
+    }
+
+    const productId = product._id;
+
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item?._id === productId);
+
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item._id === productId
+            ? {
+                ...item,
+                quantity: (item.quantity || 1) + 1,
+              }
+            : item,
+        );
+      }
+
+      return [
+        ...prevItems,
+        {
+          ...product,
+          _id: productId,
+          quantity: 1,
+        },
+      ];
+    });
+  };
+
+  /*const addToCart = (product) => {
     const productId = product?._id ?? product?.id;
 
     if (!productId) return;
@@ -46,7 +82,7 @@ export function CartProvider({ children }) {
         { ...product, _id: productId, id: productId, quantity: 1 },
       ];
     });
-  };
+  };*/
 
   const removeFromCart = (productId, removeEntireItem = false) => {
     setCartItems((prevItems) =>

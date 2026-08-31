@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
   const [products, setProducts] = useState([]);
@@ -91,7 +91,7 @@ function AdminDashboard() {
           {" "}
           Gestion-Admin
         </h1>
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center">
           <button
             onClick={() => {
               setShowAddForm(!showAddForm);
@@ -101,6 +101,18 @@ function AdminDashboard() {
           >
             {showAddForm ? "Fermer le formulaire" : "+ Ajouter un produit"}
           </button>
+
+          <Link to="/orders">
+            <button type="button" className="lux-button-primary ">
+              Liste de commandes
+            </button>
+          </Link>
+
+          <Link to="/contacts1">
+            <button type="button" className="lux-button-primary ">
+              Liste de messages
+            </button>
+          </Link>
           <button
             onClick={handleLogout}
             className="text-sm text-gray-500 hover:text-red-600 transition"

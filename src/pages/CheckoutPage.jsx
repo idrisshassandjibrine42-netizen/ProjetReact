@@ -54,7 +54,7 @@ function CheckoutPage() {
         adresse,
 
         items: cartItems.map((item) => ({
-          productId: item._id || item.id,
+          productId: item._id,
           quantity: item.quantity,
         })),
       };
@@ -66,7 +66,7 @@ function CheckoutPage() {
 
       console.log("Commande :", response.data);
 
-      setMessage("Commande préparée avec succès.");
+      setMessage("Commande enregistrée avec succès.");
 
       setFullName("");
       setPhone("");

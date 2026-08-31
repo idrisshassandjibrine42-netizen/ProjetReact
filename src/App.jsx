@@ -10,6 +10,9 @@ import CheckoutPage from "./pages/CheckoutPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import OrdersPage from "./pages/OrdersPage";
+import AdminContactsPage from "./pages/AdminContactPage";
+import AdminContactPage from "./pages/AdminContactsPage";
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="admin" element={<AdminLogin />} />
         <Route path="admin/dashboard" element={<AdminDashboard />} />
+        <Route path="orders" element={<OrdersPage />} />
+        <Route path="contacts" element={<AdminContactsPage />} />
+        <Route path="contacts1" element={<AdminContactPage />} />
       </Route>
     </Routes>
   );
