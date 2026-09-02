@@ -86,42 +86,47 @@ function AdminDashboard() {
 
   return (
     <section className="lux-container py-12">
-      <div className="flex justify-between items-center mb-8 border-b pb-4 border-line">
-        <h1 className="font-display text-3xl text-ink uppercase tracking-wide">
-          {" "}
+      <div id="header-content">
+  
+        <h1
+          id="web-title"
+          className="font-display text-2xl md:text-3xl text-ink uppercase tracking-wide"
+        >
           Gestion-Admin
         </h1>
-        <div className="flex gap-4 items-center">
+
+       
+        <div className="flex flex-col sm:flex-row md:flex-wrap gap-3 w-full md:w-auto">
           <button
             onClick={() => {
               setShowAddForm(!showAddForm);
               setEditingId(null);
             }}
-            className="lux-button-primary bg-graphite"
+            className="lux-button-primary bg-graphite w-full sm:w-auto"
           >
             {showAddForm ? "Fermer le formulaire" : "+ Ajouter un produit"}
           </button>
 
-          <Link to="/orders">
-            <button type="button" className="lux-button-primary ">
+          <Link to="/orders" className="w-full sm:w-auto">
+            <button type="button" className="lux-button-primary w-full">
               Liste de commandes
             </button>
           </Link>
 
-          <Link to="/contacts1">
-            <button type="button" className="lux-button-primary ">
+          <Link to="/contacts1" className="w-full sm:w-auto">
+            <button type="button" className="lux-button-primary w-full">
               Liste de messages
             </button>
           </Link>
+
           <button
             onClick={handleLogout}
-            className="text-sm text-gray-500 hover:text-red-600 transition"
+            className="text-sm text-gray-500 hover:text-red-600 transition w-full sm:w-auto py-2"
           >
             Déconnexion
           </button>
         </div>
       </div>
-
       {/*Formulaire dynamique */}
       {showAddForm && (
         <form
