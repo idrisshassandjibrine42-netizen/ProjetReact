@@ -87,7 +87,6 @@ function AdminDashboard() {
   return (
     <section className="lux-container py-12">
       <div id="header-content">
-  
         <h1
           id="web-title"
           className="font-display text-2xl md:text-3xl text-ink uppercase tracking-wide"
@@ -95,7 +94,6 @@ function AdminDashboard() {
           Gestion-Admin
         </h1>
 
-       
         <div className="flex flex-col sm:flex-row md:flex-wrap gap-3 w-full md:w-auto">
           <button
             onClick={() => {
@@ -184,8 +182,8 @@ function AdminDashboard() {
         </form>
       )}
       {/*liste de tabulaire des produits*/}
-      <div className="overflow-x-auto bg-white rounded shadow-sm border border-line">
-        <table className="w-full text-left border-collapse">
+      <div className="w-full overflow-x-auto bg-white rounded shadow-sm border border-line">
+        <table className="w-full table-fixed text-left border-collapse">
           <thead>
             <tr className="bg-gray-50 border-b border-line text-xs uppercase text-graphite tracking-wider font-semibold">
               <th className="p-4">Visuel</th>
